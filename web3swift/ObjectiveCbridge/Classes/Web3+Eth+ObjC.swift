@@ -12,8 +12,8 @@ import Foundation
 public final class _ObjCweb3Eth: NSObject {
     private (set) weak var web3: web3?
     
-    init(web3: web3?) {
-        self.web3 = web3
+    init(web3: _ObjCweb3?) {
+        self.web3 = web3?._web3
     }
     
     public func getBalance(address: _ObjCEthereumAddress, onBlock: NSString = "latest", error: NSErrorPointer) -> _ObjCBigUInt? {

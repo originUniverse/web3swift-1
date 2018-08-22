@@ -202,6 +202,7 @@
 		E23B5AE120EA695400DC7F32 /* web3swift_rinkeby_personalSignature_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B5AE020EA695400DC7F32 /* web3swift_rinkeby_personalSignature_Tests.swift */; };
 		E23B5AE320EA69B900DC7F32 /* web3swift_numberFormattingUtil_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B5AE220EA69B900DC7F32 /* web3swift_numberFormattingUtil_Tests.swift */; };
 		E23B5AE520EA6A0A00DC7F32 /* web3swift_contractV2_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23B5AE420EA6A0A00DC7F32 /* web3swift_contractV2_Tests.swift */; };
+		E2E41597212CB2A100E6080A /* JSONRPCrequestDispatcher+ObjX.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E41596212CB2A100E6080A /* JSONRPCrequestDispatcher+ObjX.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -362,6 +363,7 @@
 		E23B5AE020EA695400DC7F32 /* web3swift_rinkeby_personalSignature_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3swift_rinkeby_personalSignature_Tests.swift; sourceTree = "<group>"; };
 		E23B5AE220EA69B900DC7F32 /* web3swift_numberFormattingUtil_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3swift_numberFormattingUtil_Tests.swift; sourceTree = "<group>"; };
 		E23B5AE420EA6A0A00DC7F32 /* web3swift_contractV2_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3swift_contractV2_Tests.swift; sourceTree = "<group>"; };
+		E2E41596212CB2A100E6080A /* JSONRPCrequestDispatcher+ObjX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONRPCrequestDispatcher+ObjX.swift"; sourceTree = "<group>"; };
 		FB43EC035C593F9E5A3644B6 /* Pods-web3swift-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-web3swift-macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-web3swift-macOS/Pods-web3swift-macOS.debug.xcconfig"; sourceTree = "<group>"; };
 		FC1E6C115639177F2629E42A /* Pods_web3swift_osx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_web3swift_osx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -775,6 +777,7 @@
 				81FECD54211AEB49006DA367 /* EthereumAddress+ObjC.swift */,
 				81FECD57211AEB56006DA367 /* BigUInt+ObjC.swift */,
 				81FECD5A211AECBD006DA367 /* Web3+Eth+ObjC.swift */,
+				E2E41596212CB2A100E6080A /* JSONRPCrequestDispatcher+ObjX.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1081,6 +1084,7 @@
 				815630022007B53C00A0EC2F /* BIP32Keystore.swift in Sources */,
 				818ABD5B1FE95F8F002657BB /* Web3+Instance.swift in Sources */,
 				81D7D97220A31FB700A193EC /* ComparisonExtensions.swift in Sources */,
+				E2E41597212CB2A100E6080A /* JSONRPCrequestDispatcher+ObjX.swift in Sources */,
 				817EBB27200673D100E02EAA /* KeystoreV3JSONStructure.swift in Sources */,
 				81C5DA11207254F600424CD6 /* ABIv2.swift in Sources */,
 				817EBB102004FE2800E02EAA /* EthereumAddress.swift in Sources */,
