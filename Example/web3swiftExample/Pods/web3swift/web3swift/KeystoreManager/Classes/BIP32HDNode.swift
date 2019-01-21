@@ -1,13 +1,13 @@
-//
-//  BIP32HDwallet.swift
 //  web3swift
 //
-//  Created by Alexander Vlasov on 09.01.2018.
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
 //
 
 import Foundation
 import BigInt
 import CryptoSwift
+import secp256k1_swift
 
 extension UInt32 {
     public func serialize32() -> Data {

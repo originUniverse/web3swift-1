@@ -1,9 +1,7 @@
-//
-//  web3swift.h
 //  web3swift
 //
-//  Created by Petr Korolev on 06/12/2017.
-//  Copyright © 2017 Bankex Foundation. All rights reserved.
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
 //
 
 #if TARGET_OS_IPHONE
@@ -18,6 +16,5 @@ FOUNDATION_EXPORT double web3swiftVersionNumber;
 FOUNDATION_EXPORT const unsigned char web3swiftVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <web3swift/PublicHeader.h>
-
 
 

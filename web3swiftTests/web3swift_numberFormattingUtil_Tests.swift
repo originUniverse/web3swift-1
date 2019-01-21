@@ -1,16 +1,12 @@
+//  web3swift
 //
-//  web3swift_numberFormattingUtil_Tests.swift
-//  web3swift-iOS_Tests
-//
-//  Created by Антон Григорьев on 02.07.2018.
-//  Copyright © 2018 Bankex Foundation. All rights reserved.
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
 //
 
 import XCTest
 import CryptoSwift
 import BigInt
-import Result
-import secp256k1_ios
 
 @testable import web3swift_iOS
 
@@ -56,6 +52,18 @@ class web3swift_numberFormattingUtil_Tests: XCTestCase {
         let balance = BigInt("-1100000000000000000")!
         let formatted = Web3.Utils.formatToPrecision(balance, numberDecimals: 18, formattingDecimals: 4, decimalSeparator: ",")
         XCTAssert(formatted == "-1,1000")
+    }
+    
+    func testNumberFormattingUtil8() {
+        let balance = BigInt("100")!
+        let formatted = Web3.Utils.formatToPrecision(balance, numberDecimals: 18, formattingDecimals: 4, decimalSeparator: ",", fallbackToScientific: true)
+        XCTAssert(formatted == "1,00e-16")
+    }
+    
+    func testNumberFormattingUtil9() {
+        let balance = BigInt("1000000")!
+        let formatted = Web3.Utils.formatToPrecision(balance, numberDecimals: 18, formattingDecimals: 4, decimalSeparator: ",", fallbackToScientific: true)
+        XCTAssert(formatted == "1,0000e-12")
     }
     
 }

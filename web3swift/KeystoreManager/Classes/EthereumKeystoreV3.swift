@@ -1,14 +1,14 @@
-//
-//  EthereumKeystoreV3.swift
 //  web3swift
 //
-//  Created by Alexander Vlasov on 18.12.2017.
-//  Copyright © 2017 Bankex Foundation. All rights reserved.
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
 //
 
 import Foundation
 import CryptoSwift
 import Foundation
+import secp256k1_swift
+import EthereumAddress
 
 public class EthereumKeystoreV3: AbstractKeystore {
     // Class
@@ -65,13 +65,13 @@ public class EthereumKeystoreV3: AbstractKeystore {
         }
     }
     
-    public init? (password: String = "BANKEXFOUNDATION", aesMode: String = "aes-128-cbc") throws {
+    public init? (password: String = "web3swift", aesMode: String = "aes-128-cbc") throws {
         guard var newPrivateKey = SECP256K1.generatePrivateKey() else {return nil}
         defer {Data.zero(&newPrivateKey)}
         try encryptDataToStorage(password, keyData: newPrivateKey, aesMode: aesMode)
     }
     
-    public init? (privateKey: Data, password: String = "BANKEXFOUNDATION", aesMode: String = "aes-128-cbc") throws {
+    public init? (privateKey: Data, password: String = "web3swift", aesMode: String = "aes-128-cbc") throws {
         guard privateKey.count == 32 else {return nil}
         guard SECP256K1.verifyPrivateKey(privateKey: privateKey) else {return nil}
         try encryptDataToStorage(password, keyData: privateKey, aesMode: aesMode)

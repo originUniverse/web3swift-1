@@ -1,14 +1,12 @@
-//
-//  Web3+Provider+ObjC.swift
 //  web3swift
 //
-//  Created by Alexander Vlasov on 08.08.2018.
-//  Copyright © 2018 Bankex Foundation. All rights reserved.
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
 //
 
 import Foundation
 
-//@objc(Web3HttpProvider)
+@objc(Web3HttpProvider)
 final class _ObjCWeb3HttpProvider: NSObject{
     private (set) var web3Provider: Web3HttpProvider?
     

@@ -5,7 +5,7 @@
 ## Build generated
 build/
 DerivedData/
-
+.build
 ## Various settings
 *.pbxuser
 !default.pbxuser
@@ -67,3 +67,4 @@ fastlane/screenshots
 fastlane/test_output
 API_keys.plist
 web3swiftTests/key.json
+web3swiftTests/Resources/key.json

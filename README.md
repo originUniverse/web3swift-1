@@ -1,83 +1,118 @@
-<img align="left" width="25" height="25" src="https://user-images.githubusercontent.com/28599454/41086111-af4bc3b0-6a41-11e8-9f9f-2d642b12666e.png">[Ask questions](https://stackoverflow.com/questions/tagged/web3swift)
-## Important notices
-The work for 2.0 release is about to start. Ideas for new more Swift idiomatic API are welcome in issues.
+![matter-github-swift](https://github.com/matterinc/web3swift/blob/develop/web3swift-logo.png)
 
 # web3swift
 
 [![Version](https://img.shields.io/cocoapods/v/web3swift.svg?style=flat)](http://cocoapods.org/pods/web3swift)
 [![License](https://img.shields.io/cocoapods/l/web3swift.svg?style=flat)](http://cocoapods.org/pods/web3swift)
 [![Platform](https://img.shields.io/cocoapods/p/web3swift.svg?style=flat)](http://cocoapods.org/pods/web3swift)
-[![support](https://brianmacdonald.github.io/Ethonate/svg/eth-support-blue.svg)](https://brianmacdonald.github.io/Ethonate/address#0x6394b37Cf80A7358b38068f0CA4760ad49983a1B)
+[![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![support](https://brianmacdonald.github.io/Ethonate/svg/eth-support-blue.svg)](https://brianmacdonald.github.io/Ethonate/address#0xe22b8979739d724343bd002f9f432f5990879901)
+[![Build Status](https://travis-ci.com/matterinc/web3swift.svg?branch=develop)](https://travis-ci.com/matterinc/web3swift)
+[![Stackoverflow](https://img.shields.io/badge/stackoverflow-ask-blue.svg)](https://stackoverflow.com/questions/tagged/web3swift)
 
-- Swift implementation of [web3.js](https://github.com/ethereum/web3.js/) functionality :zap:
-- Interaction with remote node via JSON RPC :thought_balloon:
-- Smart-contract ABI parsing :book:
-  - ABI deconding (V2 is supported with return of structures from public functions. Part of 0.4.22 Solidity compiler)
-  - RLP encoding
-- Interactions (read/write to Smart contracts) :arrows_counterclockwise:
-- Local keystore management (geth compatible)
-- Literally following the standards:
-  - [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) HD Wallets: Deterministic Wallet
-  - [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) (Seed phrases)
-  - [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) (Key generation prefixes)
-  - [EIP-155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md) (Replay attacks protection) *enforced!*
+**web3swift** is your toolbelt for any kind interactions with Ethereum network.
 
 
-## Check this out
+  * [Ready Features](#features)
+  * [Design Decisions](#design-decisions)
+  * [Requirements](#requirements)
+  * [Migration Guides](#migration-guides)
+  * [Communication](#communication)
+  * [Installation](#installation)
+    + [CocoaPods](#cocoapods)
+    + [Carthage](#carthage)
+  * [Example Project](#example-project)
+  * [Popular questions](#popular-questions)
+  * [What's next](#whats-next)
+  * [Credits](#credits)
+    + [Security Disclosure](#security-disclosure)
+  * [Donations](#donations)
+  * [License](#license)
 
-- Private key and transaction were created directly on an iOS device and sent directly to [Infura](https://infura.io) node
-- Native API
-- Security (as cool as a hard wallet! Right out-of-the-box! :box: )
-- No unnecessary dependencies
-- Possibility to work with all existing smart contracts
-- Referencing the newest features introduced in Solidity
+---
+  - [Usage Doc](https://github.com/matterinc/web3swift/blob/develop/Documentation/Usage.md)
+	- **Account Management** 
+		- [Create Account](https://github.com/matterinc/web3swift/blob/develop/Documentation/Usage.md#create-account)
+		- [Import Account](https://github.com/matterinc/web3swift/blob/develop/Documentation/Usage.md#import-account)
+		- [Manage Keystore](https://github.com/matterinc/web3swift/blob/develop/Documentation/Usage.md#manage-keystore)
+		- [Ethereum Address](https://github.com/matterinc/web3swift/blob/develop/Documentation/Usage.md#ethereum-address)
+		- [Get Balance](https://github.com/matterinc/web3swift/blob/develop/Documentation/Usage.md#get-balance)
+	- **Transactions Operations** 
+		- [Prepare Transaction](https://github.com/matterinc/web3swift/blob/develop/Documentation/Usage.md#prepare-transaction)
+		- [Send Transaction](https://github.com/matterinc/web3swift/blob/develop/Documentation/Usage.md#send-transaction)
+	- **Chain State** 
+		- [Get Block Number](https://github.com/matterinc/web3swift/blob/develop/Documentation/Usage.md#get-block-number)
 
-## Design decisions
 
-- Not every JSON RPC function is exposed yet, priority is given to the ones required for mobile devices
+## Ready Features
+
+- [x] Swift implementation of [web3.js](https://github.com/ethereum/web3.js/) functionality :zap:
+- [x] Interaction with remote node via JSON RPC :thought_balloon:
+- [x] Local keystore management (`geth` compatible)
+- [x] Smart-contract ABI parsing :book:
+- [x] ABI deconding (V2 is supported with return of structures from public functions. Part of 0.4.22 Solidity compiler)
+- [x] Ethereum Name Service (ENS) support - a secure & decentralised way to address resources both on and off the blockchain using simple, human-readable names
+- [x] Interactions (read/write to Smart contracts) :arrows_counterclockwise:
+- [x] Parsing TxPool content into native values (ethereum addresses and transactions) - easy to get pending transactions
+- [x] Event loops functionality
+- [x] Supports Web3View functionality - WKWebView with injected "web3" provider
+- [x] Possibility to add or remove "middleware" that intercepts, modifies and even cancel transaction workflow on stages "before assembly", "after assembly"and "before submission"
+- [x] Literally following the standards:
+	- [x] [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) HD Wallets: Deterministic Wallet
+	- [x] [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) (Seed phrases)
+	- [x] [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) (Key generation prefixes)
+	- [x] [EIP-20](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md) (A standard interface for tokens - ERC-20)
+	- [x] [EIP-67](https://github.com/ethereum/EIPs/issues/67) (Standard URI scheme with metadata, value and byte code)
+	- [x] [EIP-155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md) (Replay attacks protection) *enforced!*
+	- [x] [EIP-681](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-681.md) (A standard way of representing various transactions, especially payment requests in Ethers and ERC-20 tokens as URLs)
+	- [x] [EIP-721](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md) (A standard interface for non-fungible tokens, also known as deeds - ERC-721)
+	- [x] [EIP-165](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-165.md) (Standard Interface Detection, also known as ERC-165)
+	- [x] [EIP-777](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md) (New Advanced Token Standard, also known as ERC-777)
+	- [x] [EIP-820](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-820.md) (Pseudo-introspection Registry Contract, also known as ERC-820)
+	- [x] [EIP-888](https://github.com/ethereum/EIPs/issues/888) (MultiDimensional Token Standard, also known as ERC-888)
+	- [x] [EIP-1400](https://github.com/ethereum/EIPs/issues/1411) (Security Token Standard, also known as ERC-1400)
+	- [x] [EIP-1410](https://github.com/ethereum/EIPs/issues/1410) (Partially Fungible Token Standard, also known as ERC-1410)
+	- [x] [EIP-1594](https://github.com/ethereum/EIPs/issues/1594) (Core Security Token Standard, also known as ERC-1594)
+	- [x] [EIP-1643](https://github.com/ethereum/EIPs/issues/1643) (Document Management Standard, also known as ERC-1643)
+	- [x] [EIP-1644](https://github.com/ethereum/EIPs/issues/1644) (Controller Token Operation Standard, also known as ERC-1644)
+	- [x] [EIP-1633](https://github.com/ethereum/EIPs/issues/1634) (Re-Fungible Token, also known as ERC-1633)
+	- [x] [EIP-721x](https://github.com/loomnetwork/erc721x) (An extension of ERC721 that adds support for multi-fungible tokens and batch transfers, while being fully backward-compatible, also known as ERC-721x)
+	- [x] [EIP-1155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md) (Multi Token Standard, also known as ERC-1155)
+	- [x] [EIP-1376](https://github.com/ethereum/EIPs/issues/1376) (Service-Friendly Token, also known as ERC-1376)
+	
+- [x] RLP encoding
+- [x] Batched requests in concurrent mode
+- [x] Base58 encoding scheme
+- [x] Formatting to and from Ethereum Units
+- [x] Comprehensive Unit and Integration Test Coverage
+
+## Design Decisions
+
+- Not every JSON RPC function is exposed yet, and priority is given to the ones required for mobile devices
 - Functionality was focused on serializing and signing transactions locally on the device to send raw transactions to Ethereum network
 - Requirements for password input on every transaction are indeed a design decision. Interface designers can save user passwords with the user's consent
-- Public function for private key export is exposed for user convenience, but marked as UNSAFE_ :) Normal workflow takes care of EIP155 compatibility and proper clearing of private key data from memory
-
-### Here it is
-[https://rinkeby.etherscan.io/tx/0xc6eca60ecac004a1501a4323a10edb7fa4cd1a0896675f6b51704c84dedad056](https://rinkeby.etherscan.io/tx/0xc6eca60ecac004a1501a4323a10edb7fa4cd1a0896675f6b51704c84dedad056)
-
-```
-Transaction
-Nonce: 35
-Gas price: 5000000000
-Gas limit: 21000
-To: 0x6394b37Cf80A7358b38068f0CA4760ad49983a1B
-Value: 1000000000000000
-Data: 0x
-v: 43
-r: 73059897783840535708732471549376620878882680550447969052675399628060606060727
-s: 12280625377431973240236065453692843538037349746280474092545114784968542260859
-Intrinsic chainID: Optional(4)
-Infered chainID: Optional(4)
-sender: Optional(web3swift.EthereumAddress(_address: "0x855adf524273c14b7260a188af0ae30e82e91959"))
-
-["id": 1514485925, "result": 0xc6eca60ecac004a1501a4323a10edb7fa4cd1a0896675f6b51704c84dedad056, "jsonrpc": 2.0]
-On Rinkeby TXid = 0xc6eca60ecac004a1501a4323a10edb7fa4cd1a0896675f6b51704c84dedad056
-```
-
-## Example
-
-You can try it yourself by running the example project:
-
-- Clone the repo
-- `cd Example/web3swiftExample`
-- run `pod install` from the `Example/web3swiftExample` directory.
-- `open ./web3swiftExample.xcworkspace`
+- Public function for private key export is exposed for user convenience but marked as UNSAFE_ :) Normal workflow takes care of EIP155 compatibility and proper clearing of private key data from memory
 
 ## Requirements
 
-Web3swift requires Swift 4.1 and iOS 9.0 or macOS 10.11 although we recommend to use the latest iOS and MacOS versions for your own safety. Don't forget to set the iOS version in a Podfile, otherwise you get an error if the deployment target is less than the latest SDK.
+- iOS 9.0+ / macOS 10.11+
+- Xcode 9.0+
+- Swift 4.1+
+
+## Migration Guides
+
+- [web3swift 2.0 Migration Guide](https://github.com/matterinc/web3swift/blob/documentation/Documentation/web3swift%202.0%20Migration%20Guide.md)
 
 ## Communication
 
-- if you **need help**, use [Stack Overflow](https://stackoverflow.com/questions/tagged/web3swift) (tag 'web3swift')
-- If you'd like to **ask a general question**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/web3swift).
+When using this lib, please make references to this repo and give your start! :)
+*Nothing makes developers happier than seeing someone else use our work and go wild with it.*
+
+If you are using web3swift in your app or know of an app that uses it, please add it to [this list](https://github.com/matterinc/web3swift/wiki/Apps-using-web3swift).
+
+- If you **need help**, use [Stack Overflow](https://stackoverflow.com/questions/tagged/web3swift) and tag `web3swift`.
+- If you need to **find or understand an API**, check [our documentation](http://web3swift.github.io/web3swift/).
+- If you'd like to **see web3swift best practices**, check [Apps using this library](https://github.com/matterinc/web3swift/wiki/Apps-using-web3swift).
 - If you **found a bug**, [open an issue](https://github.com/matterinc/web3swift/issues).
 - If you **have a feature request**, [open an issue](https://github.com/matterinc/web3swift/issues).
 - If you **want to contribute**, [submit a pull request](https://github.com/matterinc/web3swift/pulls).
@@ -92,9 +127,7 @@ Web3swift requires Swift 4.1 and iOS 9.0 or macOS 10.11 although we recommend to
 $ sudo gem install cocoapods
 ```
 
-
 To integrate web3swift into your Xcode project using CocoaPods, specify it in your `Podfile`:
-
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
@@ -102,7 +135,7 @@ platform :ios, '9.0'
 
 target '<Your Target Name>' do
     use_frameworks!
-    pod 'web3swift', '~> 1.1.5'
+    pod 'web3swift'
 end
 ```
 
@@ -111,130 +144,119 @@ Then, run the following command:
 ```bash
 $ pod install
 ```
-## Features
 
-- [x] Create Account
-- [x] Import Account
-- [x] Sign transactions
-- [x] Send transactions, call functions of smart-contracts, estimate gas costs
-- [x] Serialize and deserialize transactions and results to native Swift types
-- [x] Convenience functions for chain state: block number, gas price
-- [x] Check transaction results and get receipt
-- [x] Parse event logs for transaction
-- [x] Manage user's private keys through encrypted keystore abstractions
-- [x] Batched requests in concurrent mode, checks balances of 580 tokens (from the latest MyEtherWallet repo) over 3 seconds
+### Carthage
 
-## Usage
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
 
-Here's a few use cases of our library
-### Initializing Ethereum address
-```bash
-let coldWalletAddress = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")
-let constractAddress = EthereumAddress("0x45245bc59219eeaaf6cd3f382e078a461ff9de7b")
-```
-Ethereum addresses are checksum checked if they are not lowercased and always length checked
+You can install Carthage with [Homebrew](https://brew.sh/) using the following command:
 
-
-### Setting options
 ```bash
-var options = Web3Options.defaultOptions()
-    // public var to: EthereumAddress? = nil - to what address transaction is aimed
-    // public var from: EthereumAddress? = nil - form what address it should be sent (either signed locally or on the node)
-    // public var gasLimit: BigUInt? = BigUInt(90000) - default gas limit
-    // public var gasPrice: BigUInt? = BigUInt(5000000000) - default gas price, quite small
-    // public var value: BigUInt? = BigUInt(0) - amount of WEI sent along the transaction
-options.gasPrice = gasPrice
-options.gasLimit = gasLimit
-options.from = EthereumAddress("0xE6877A4d8806e9A9F12eB2e8561EA6c1db19978d")
-```
-### Getting ETH balance
-```bash
-let address = EthereumAddress("0xE6877A4d8806e9A9F12eB2e8561EA6c1db19978d")!
-let web3Main = Web3.InfuraMainnetWeb3()
-let balanceResult = web3Main.eth.getBalance(address)
-guard case .success(let balance) = balanceResult else {return}
-```
-### Getting gas price
-```bash
-let web3Main = Web3.InfuraMainnetWeb3()
-let gasPriceResult = web3Main.eth.getGasPrice()
-guard case .success(let gasPrice) = gasPriceResult else {return}
-```
-### Getting ERC20 token balance
-```bash
-let contractAddress = EthereumAddress("0x45245bc59219eeaaf6cd3f382e078a461ff9de7b")! // BKX token on Ethereum mainnet
-let contract = web3.contract(Web3.Utils.erc20ABI, at: contractAddress, abiVersion: 2)! // utilize precompiled ERC20 ABI for your concenience
-guard let bkxBalanceResult = contract.method("balanceOf", parameters: [coldWalletAddress] as [AnyObject], options: options)?.call(options: nil) else {return} // encode parameters for transaction
-guard case .success(let bkxBalance) = bkxBalanceResult, let bal = bkxBalance["0"] as? BigUInt else {return} // bkxBalance is [String: Any], and parameters are enumerated as "0", "1", etc in order of being returned. If returned parameter has a name in ABI, it is also duplicated
-print("BKX token balance = " + String(bal))
+$ brew update
+$ brew install carthage
 ```
 
-### Sending ETH
-```bash
-let web3Rinkeby = Web3.InfuraRinkebyWeb3()
-web3Rinkeby.addKeystoreManager(bip32keystoreManager) // attach a keystore if you want to sign locally. Otherwise unsigned request will be sent to remote node
-options.from = bip32ks?.addresses?.first! // specify from what address you want to send it
-intermediateSend = web3Rinkeby.contract(Web3.Utils.coldWalletABI, at: coldWalletAddress, abiVersion: 2)!.method(options: options)! // an address with a private key attached in not different from any other address, just has very simple ABI
-let sendResultBip32 = intermediateSend.send(password: "BANKEXFOUNDATION")
+To integrate web3swift into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "matterinc/web3swift" "carthage"
 ```
 
-### Sending ERC20
-```bash
-var convenienceTransferOptions = Web3Options.defaultOptions()
-convenienceTransferOptions.gasPrice = gasPriceRinkeby
-let convenienceTokenTransfer = web3Rinkeby.eth.sendERC20tokensWithNaturalUnits(tokenAddress: EthereumAddress("0xa407dd0cbc9f9d20cdbd557686625e586c85b20a")!, from: (ks?.addresses?.first!)!, to: EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")!, amount: "0.0001", options: convenienceTransferOptions) // there are also convenience functions to send ETH and ERC20 under the .eth structure
-let gasEstimateResult = convenienceTokenTransfer!.estimateGas(options: nil)
-guard case .success(let gasEstimate) = gasEstimateResult else {return}
-convenienceTransferOptions.gasLimit = gasEstimate
-let convenienceTransferResult = convenienceTokenTransfer!.send(password: "BANKEXFOUNDATION", options: convenienceTransferOptions)
-switch convenienceTransferResult {
-    case .success(let res):
-        print("Token transfer successful")
-        print(res)
-    case .failure(let error):
-        print(error)
+Run `carthage update` to build the framework and drag the built `web3swift.framework` into your Xcode project.
+
+## Example Project
+
+You can try lib by running the example project:
+
+- Clone the repo: `git clone https://github.com/matterinc/web3swift.git`
+- Move to the repo: `cd web3swift/Example/web3swiftExample`
+- Install Dependencies: `pod install`
+- Open: `open ./web3swiftExample.xcworkspace`
+
+## Popular questions
+
+#### Is it possible to get Mnemonic Phrase (Seed Phrase) from Private key using web3swift?
+
+In web3swift there is no backward conversion from Private key to Mnemonic Phrase. Also it is theoretically impossible to recover a phrase from a Private key. After Seed Phrase is converted to some initial entropy the “master key is derived” and the initial entropy is discarded.
+
+The simplest solution is to encrypt the phrase using users pincode and save it in some other secure keystore.
+Mnemonic Phrase is very sensitive data and you must be very careful to let the user get it.
+Our advise if you want to show it to user - ask to save a Passphrase when creating BIP32Keystore. 
+
+#### How to interact with custom smart-contract with web3swift?
+
+For example: you want to interact with smart-contract and all you know is - its address (address example: 0xfa28eC7198028438514b49a3CF353BcA5541ce1d).
+
+You can get the ABI of your contract directly from [Remix IDE](https://remix.ethereum.org/) ([Solution](https://ethereum.stackexchange.com/questions/27536/where-to-find-contract-abi-in-new-version-of-online-remix-solidity-compiler?rq=1))
+
+Then you should use contract address and ABI in creating contract object. In example we use Infura Mainnet:
+```swift
+let yourContractABI: String = <CONTRACT JSON ABI>
+let toEthereumAddress: EthereumAddress? = <DESTINATION ETHEREUM ADDRESS>
+let abiVersion: Int = <ABI VERSION NUMBER>
+
+let contract = Web3.InfuraMainnetWeb3().contract(yourContractABI, at: toEthereumAddress, abiVersion: abiVersion)
+```
+Here is the example how you should call some contract method:
+```swift
+let method: String = <CONTRACT METHOD NAME>
+let parameters: [AnyObject] = <PARAMETERS>
+let extraData: Data = <DATA>
+let transactionOptions: TransactionOptions = <OPTIONS>
+
+let transaction = contract.read(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
+```
+
+Here is the example how you should send transaction to some contract method:
+```swift
+let method: String = <CONTRACT METHOD NAME>
+let parameters: [AnyObject] = <PARAMETERS>
+let extraData: Data = <DATA>
+let transactionOptions: TransactionOptions = <OPTIONS>
+
+let transaction = contract.write(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
+```
+
+#### How to set test local node?
+You can write something like that:
+```swift
+func setLocalNode(port: Int = 8545) -> Web3? {
+    guard let web3 = Web3(url: URL(string: "http://127.0.0.1:\(port)")!) else { return nil }
+    return web3
 }
 ```
 
-## Global plans
-- Full reference `web3js` functionality
-- Light Ethereum subprotocol (LES) integration
+## What's next
 
-## [Apps using this library](https://github.com/matterinc/web3swift/wiki/Apps-using-web3swift) 
-
-If you've used this project in a live app, please let us know!
-
-*If you are using `web3swift` in your app or know of an app that uses it, please add it to [this](https://github.com/matterinc/web3swift/wiki/Apps-using-web3swift) list.*
-
-## Special thanks to
-
-- Gnosis team and their library [Bivrost-swift](https://github.com/gnosis/bivrost-swift) for inspiration for the ABI decoding approach
-- [Trust iOS Wallet](https://github.com/TrustWallet/trust-wallet-ios) for the collaboration and discussion of the initial idea
-- Official Ethereum and Solidity docs, everything was written from ground truth standards
-
-## Contribution
-
-For the latest version, please check [develop](https://github.com/matterinc/web3swift/tree/develop) branch.
-Changes made to this branch will be merged into the [master](https://github.com/matterinc/web3swift/tree/master) branch at some point.
-
-- If you want to contribute, submit a [pull request](https://github.com/matterinc/web3swift/pulls) against a development `develop` branch.
-- If you found a bug, [open an issue](https://github.com/matterinc/web3swift/issues).
-- If you have a feature request, [open an issue](https://github.com/matterinc/web3swift/issues).
+- [x] [R-Token](https://github.com/harborhq/r-token) (Smart Contracts for applying regulatory compliance to tokenized securities issuance and trading)
+- [x] [SRC-20](https://swarm.fund/swarm-basics/) (Swarm protocol that enables the tokenization of assets on the blockchain - Security Tokens)
+- [x] [ST-20](https://github.com/PolymathNetwork/polymath-core) (ST-20 token is an Ethereum-based token implemented on top of the ERC-20 protocol that adds the ability for tokens to control transfers based on specific rules)
+- [x] [Objective-C] - a proxy bridge to build your DApp on Objective-C using web3swift
+- [x] [Performance Improvements]
+- [x] [More convenient methods for basic namespaces]
+- [x] [Complete Documentation](https://web3swift.github.io/web3swift)
 
 
-## Appreciation
-
-When using this pod, please make references to this repo and give your start! :)
-*Nothing makes developers happier than seeing someone else use our work and go wild with it.*
-
-If you are using web3swift in your app or know of an app that uses it, please add it to [this list](https://github.com/matterinc/web3swift/wiki/Apps-using-web3swift).
-
-## Authors
+## Credits
 
 Alex Vlasov, [@shamatar](https://github.com/shamatar),  alex.m.vlasov@gmail.com
 
 Petr Korolev, [@skywinder](https://github.com/skywinder)
 
+### Security Disclosure
+
+If you believe you have identified a security vulnerability with web3swift, you should report it as soon as possible via email to [Alex Vlasov](https://github.com/shamatar) alex.m.vlasov@gmail.com. Please do not post it to a public issue tracker.
+
+## Donations
+
+[The Matters](https://github.com/orgs/matterinc/people) are charged with open-sorсe and do not require money for using their web3swift lib.
+We want to continue to do everything we can to move the needle forward.
+If you use any of our libraries for work, see if your employers would be interested in donating. Any amount you can donate today to help us reach our goal would be greatly appreciated.
+
+Our Ether wallet address: 0xe22b8979739d724343bd002f9f432f5990879901
+
+![Donate](http://qrcoder.ru/code/?0xe22b8979739d724343bd002f9f432f5990879901&4&0)
+
 ## License
 
-web3swift is available under the Apache License 2.0 license. See the [LICENSE](https://github.com/matterinc/web3swift/blob/master/LICENSE) file for more info.
+web3swift is available under the Apache License 2.0 license. See the [LICENSE](https://github.com/matterinc/web3swift/blob/documentation/LICENSE) for details.

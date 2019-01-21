@@ -1,14 +1,13 @@
-//
-//  Promise+Web3+Eth+GetAccounts.swift
 //  web3swift
 //
-//  Created by Alexander Vlasov on 17.06.2018.
-//  Copyright © 2018 Bankex Foundation. All rights reserved.
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
 //
 
 import Foundation
 import BigInt
 import PromiseKit
+import EthereumAddress
 
 extension web3.Eth {
     public func getAccountsPromise() -> Promise<[EthereumAddress]> {
@@ -16,11 +15,10 @@ extension web3.Eth {
         if (self.web3.provider.attachedKeystoreManager != nil) {
             let promise = Promise<[EthereumAddress]>.pending()
             queue.async {
-                let result = self.web3.wallet.getAccounts()
-                switch result {
-                case .success(let allAccounts):
+                do {
+                    let allAccounts = try self.web3.wallet.getAccounts()
                     promise.resolver.fulfill(allAccounts)
-                case .failure(let error):
+                } catch {
                     promise.resolver.reject(error)
                 }
             }
@@ -31,9 +29,9 @@ extension web3.Eth {
         return rp.map(on: queue ) { response in
             guard let value: [EthereumAddress] = response.getValue() else {
                 if response.error != nil {
-                    throw Web3Error.nodeError(response.error!.message)
+                    throw Web3Error.nodeError(desc: response.error!.message)
                 }
-                throw Web3Error.nodeError("Invalid value from Ethereum node")
+                throw Web3Error.nodeError(desc: "Invalid value from Ethereum node")
             }
             return value
         }

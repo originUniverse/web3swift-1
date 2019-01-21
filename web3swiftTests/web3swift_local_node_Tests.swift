@@ -1,17 +1,13 @@
-////
-////  web3swift_local_node_Tests.swift
-////  web3swift-iOS_Tests
-////
-////  Created by Petr Korolev on 16/04/2018.
-////  Copyright © 2018 Bankex Foundation. All rights reserved.
-////
+//  web3swift
+//
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
+//
 
 
 import XCTest
 import CryptoSwift
 import BigInt
-import Result
-import secp256k1_ios
 
 @testable import web3swift_iOS
 
@@ -54,7 +50,7 @@ class web3swift_local_node_Tests: XCTestCase {
     func testEthSendExampleWithRemoteSigning() {
         let web3 = Web3.new(URL.init(string: "http://127.0.0.1:8545")!)!
         guard case .success(let allAddresses) = web3.eth.getAccounts() else {return XCTFail()}
-        let sendToAddress = EthereumAddress("0x6394b37Cf80A7358b38068f0CA4760ad49983a1B")
+        let sendToAddress = EthereumAddress("0xe22b8979739D724343bd002F9f432F5990879901")
         let contract = web3.contract(Web3.Utils.coldWalletABI, at: sendToAddress, abiVersion: 2)
         var options = Web3Options.defaultOptions()
         options.value = Web3.Utils.parseToBigUInt("1.0", units: .eth)
@@ -71,6 +67,11 @@ class web3swift_local_node_Tests: XCTestCase {
         }
     }
 
+    func testGetNodeAccounts() {
+        let web3 = Web3.new(URL.init(string: "http://127.0.0.1:8545")!)!
+        guard case .success(let allAddresses) = web3.eth.getAccounts() else {return XCTFail()}
+        print(allAddresses)
+    }
 
 
 
@@ -100,6 +101,69 @@ class web3swift_local_node_Tests: XCTestCase {
     //            print(result)
     //        }
     //    }
-
-
+    
+    // should start geth with SLOW automining to test this
+    func testTxPoolStatus() {
+        let web3 = Web3.new(URL.init(string: "http://127.0.0.1:8545")!)!
+        guard case .success(let allAddresses) = web3.eth.getAccounts() else {return XCTFail()}
+        let sendToAddress = EthereumAddress("0xe22b8979739D724343bd002F9f432F5990879901")
+        let contract = web3.contract(Web3.Utils.coldWalletABI, at: sendToAddress, abiVersion: 2)
+        var options = Web3Options.defaultOptions()
+        options.value = Web3.Utils.parseToBigUInt("1.0", units: .eth)
+        options.from = allAddresses[0]
+        let intermediate = contract?.method("fallback", options: options)
+        guard let _ = intermediate?.send(password: "").value else {return XCTFail()}
+    
+        let result = web3.txPool.getStatus()
+        switch result {
+        case .failure(let error):
+            print(error)
+            XCTFail()
+        case .success(let response):
+            print(response)
+            XCTAssert(response.pending == 1)
+        }
+    }
+    
+    func testTxPoolInspect() {
+        let web3 = Web3.new(URL.init(string: "http://127.0.0.1:8545")!)!
+        guard case .success(let allAddresses) = web3.eth.getAccounts() else {return XCTFail()}
+        let sendToAddress = EthereumAddress("0xe22b8979739D724343bd002F9f432F5990879901")
+        let contract = web3.contract(Web3.Utils.coldWalletABI, at: sendToAddress, abiVersion: 2)
+        var options = Web3Options.defaultOptions()
+        options.value = Web3.Utils.parseToBigUInt("1.0", units: .eth)
+        options.from = allAddresses[0]
+        let intermediate = contract?.method("fallback", options: options)
+        guard let _ = intermediate?.send(password: "").value else {return XCTFail()}
+        let result = web3.txPool.getInspect()
+        
+        switch result {
+        case .failure(let error):
+            print(error)
+            XCTFail()
+        case .success(let response):
+            print(response)
+        }
+    }
+    
+    func testTxPoolContent() {
+        let web3 = Web3.new(URL.init(string: "http://127.0.0.1:8545")!)!
+        guard case .success(let allAddresses) = web3.eth.getAccounts() else {return XCTFail()}
+        let sendToAddress = EthereumAddress("0xe22b8979739D724343bd002F9f432F5990879901")
+        let contract = web3.contract(Web3.Utils.coldWalletABI, at: sendToAddress, abiVersion: 2)
+        var options = Web3Options.defaultOptions()
+        options.value = Web3.Utils.parseToBigUInt("1.0", units: .eth)
+        options.from = allAddresses[0]
+        let intermediate = contract?.method("fallback", options: options)
+        guard let _ = intermediate?.send(password: "").value else {return XCTFail()}
+        let result = web3.txPool.getContent()
+        
+        switch result {
+        case .failure(let error):
+            print(error)
+            XCTFail()
+        case .success(let response):
+            print(response)
+        }
+    }
 }

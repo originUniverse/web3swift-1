@@ -1,3 +1,9 @@
+//  web3swift
+//
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
+//
+
 import Foundation
 
 extension String {
@@ -7,13 +13,6 @@ extension String {
     
     var fullNSRange: NSRange {
         return NSRange(fullRange, in: self)
-    }
-
-    func lastIndex(of char: Character) -> Index? {
-        guard let range = range(of: String(char), options: .backwards) else {
-            return nil
-        }
-        return range.lowerBound
     }
     
     func index(of char: Character) -> Index? {

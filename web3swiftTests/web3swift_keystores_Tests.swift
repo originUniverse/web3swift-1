@@ -1,9 +1,7 @@
+//  web3swift
 //
-//  web3swiftKyestoresTests.swift
-//  web3swift-iOS_Tests
-//
-//  Created by Георгий Фесенко on 02/07/2018.
-//  Copyright © 2018 Bankex Foundation. All rights reserved.
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
 //
 
 import XCTest
@@ -26,6 +24,13 @@ class web3swift_Keystores_tests: XCTestCase {
         XCTAssert(seed?.toHexString() == "64c87cde7e12ecf6704ab95bb1408bef047c22db4cc7491c4271d170a1b213d20b385bc1588d9c7b38f1b39d415665b8a9030c9ec653d75e65f847d8fc1fc440")
     }
     
+    func testBIP39SeedAndMnemConversions() {
+        let seed = Data.randomBytes(length: 32)!
+        let mnemonics = BIP39.generateMnemonicsFromEntropy(entropy: seed)
+        let recoveredSeed = BIP39.mnemonicsToEntropy(mnemonics!, language: .english)
+        XCTAssert(seed == recoveredSeed)
+    }
+    
     func testHMAC() {
         let seed = Data.fromHex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b")!
         let data = Data.fromHex("4869205468657265")!
@@ -42,6 +47,22 @@ class web3swift_Keystores_tests: XCTestCase {
         print(try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue:0)))
         let key = try! keystore!.UNSAFE_getPrivateKeyData(password: "", account: account)
         XCTAssertNotNil(key)
+    }
+    
+    func testV3keystoreSerialization() {
+        let keystore = try! EthereumKeystoreV3(password: "");
+        XCTAssertNotNil(keystore)
+        let account = keystore!.addresses![0]
+        let data = try! keystore!.serialize()
+        let key = try! keystore!.UNSAFE_getPrivateKeyData(password: "", account: account)
+        XCTAssertNotNil(key)
+        
+        let restored = EthereumKeystoreV3(data!)
+        XCTAssertNotNil(restored)
+        XCTAssertEqual(keystore!.addresses!.first!, restored!.addresses!.first!)
+        let restoredKey = try! restored!.UNSAFE_getPrivateKeyData(password: "", account: account)
+        XCTAssertNotNil(restoredKey)
+        XCTAssertEqual(key, restoredKey)
     }
     
     func testNewBIP32keystore() {
@@ -215,5 +236,5 @@ class web3swift_Keystores_tests: XCTestCase {
         let privateKey = Data.randomBytes(length: 32)!
         let _ = try! EthereumKeystoreV3(privateKey: privateKey, password: "TEST")!
     }
-
+    
 }

@@ -1,9 +1,7 @@
-//
-//  Promise+Web3+Eth+GetBlockByNumber.swift
 //  web3swift
 //
-//  Created by Alexander Vlasov on 17.06.2018.
-//  Copyright © 2018 Bankex Foundation. All rights reserved.
+//  Created by Alex Vlasov.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
 //
 
 import Foundation
@@ -28,9 +26,9 @@ extension web3.Eth {
         return rp.map(on: queue ) { response in
             guard let value: Block = response.getValue() else {
                 if response.error != nil {
-                    throw Web3Error.nodeError(response.error!.message)
+                    throw Web3Error.nodeError(desc: response.error!.message)
                 }
-                throw Web3Error.nodeError("Invalid value from Ethereum node")
+                throw Web3Error.nodeError(desc: "Invalid value from Ethereum node")
             }
             return value
         }
